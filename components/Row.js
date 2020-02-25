@@ -9,11 +9,12 @@ const Row = ({ type, row }) => {
   const [updating, setUpdating] = useState(false);
   const [data, setData] = useState(null);
   const id = row[0];
+  const singularType = type.slice(0, -1);
   const handleCheck = async (id) => {
     const res = await fetch(`/api/${type}/${id}`);
     const newData = await res.json();
     if (newData.hasOwnProperty('current')) {
-      setCurrent(newData.current ? 'Current' : '');
+      setCurrent(newData.current ? 'Up-to-date' : '');
       if (!newData.current) setUpdate(true);
     } else {
       if (newData.importUrl === '') {
@@ -63,7 +64,9 @@ const Row = ({ type, row }) => {
 
   return (
     <TableRow>
-      {row.map(col => <TableCell>{col}</TableCell>)}
+      {row.map((col, index) => <TableCell>
+        {index === 1 ? <a href={`http://hubitat/${singularType}/editor/${id}`} target='_blank'>{col}</a> : col}
+      </TableCell>)}
       <TableCell>
         {(current === 'Checking...' || updating) && <CircularProgress size='1em' />} {current}
         {update && <button onClick={handleUpdate}>{updating ? 'Updating...' : 'Update'}</button>}

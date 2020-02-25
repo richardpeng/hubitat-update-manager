@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <div>
       <Link href={{ pathname: "/", query }}>
-        <a style={linkStyle}>Home</a>
+        <a style={linkStyle}>Hub</a>
       </Link>
       <Link href={{ pathname: "/apps", query }}>
         <a style={linkStyle}>Apps</a>

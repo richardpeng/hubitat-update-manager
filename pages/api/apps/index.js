@@ -1,10 +1,8 @@
 import Hub from '../../../src/Api'
 
 export default async (req, res) => {
-  const body = JSON.parse(req.body);
-  const { id, version, source } = body;
   const Api = new Hub('http://hubitat/')
-  const app = await Api.updateApp({ id, version, source });
+  const app = await Api.fetch('apps');
 
   if (app) {
     res.status(200).json(app)

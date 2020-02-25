@@ -30,7 +30,6 @@ const endpoints = {
           const value = node.querySelector('.menu-text');
           if (headerText === 'Default Text To Speech (TTS) Voice') {
             const selectedOption = Array.from(value.querySelectorAll('option')).find(o => o.getAttribute('selected') !== undefined);
-            console.log(selectedOption)
             acc[headerText] = selectedOption.text.trim();
           } else {
             acc[headerText] = value.text.trim();
@@ -73,7 +72,6 @@ class Hub {
   }
 
   async fetch(endpoint, id) {
-    console.log('queryHub', endpoint, id)
     const { path, parser } = endpoints[endpoint];
     const res = await fetch(`http://hubitat/${path(id)}`)
     if (parser) {
@@ -83,7 +81,6 @@ class Hub {
   }
 
   async get(type, id) {
-    console.log('get', type, id)
     const res = await Promise.all([
       fetch(`http://hubitat/${type}/ajax/code?id=${id}`)
         .then(res => res.json()),
@@ -94,7 +91,6 @@ class Hub {
     const importUrl = parse(html).querySelector('#importUrl').getAttribute('value').replace(/\s/g, '');
     let current, latestSource
     if (importUrl && importUrl !== '') {
-      console.log('fetching latest source for comparison')
       latestSource = await fetch(importUrl).then(res => res.text());
       current = latestSource === payload.source
     }

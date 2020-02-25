@@ -1,4 +1,4 @@
-import Hub from '../../../Api'
+import Hub from '../../../src/Api'
 
 export default async ({ query: { id } }, res) => {
   const Api = new Hub('http://hubitat/')

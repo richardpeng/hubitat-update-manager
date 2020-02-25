@@ -1,4 +1,4 @@
-import Hub from '../../../Api'
+import Hub from '../../../src/Api'
 
 export default async (req, res) => {
   const body = JSON.parse(req.body);

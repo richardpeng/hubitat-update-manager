@@ -31,7 +31,7 @@ const AppTable = ({ type, query }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.rows.slice(-2).map(row => <Row row={row} query={query} />)}
+          {data.rows.map(row => <Row row={row} query={query} />)}
         </TableBody>
       </Table>}
     </div>

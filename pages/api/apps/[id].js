@@ -1,7 +1,6 @@
 import Hub from '../../../src/Api'
 
 export default async ({ query: { id, hubUrl } }, res) => {
-  console.log(hubUrl);
   const Api = new Hub(hubUrl)
   const app = await Api.getApp(id);
 

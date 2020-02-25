@@ -81,7 +81,6 @@ class Hub {
   }
 
   async get(type, id) {
-    console.log(this.hubUrl)
     const res = await Promise.all([
       fetch(`${this.hubUrl}/${type}/ajax/code?id=${id}`)
         .then(res => res.json()),

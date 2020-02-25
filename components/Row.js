@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import IconButton from '@material-ui/core/IconButton'
 
 const Row = ({ type, row, query }) => {
   const [current, setCurrent] = useState('Checking...');
@@ -9,6 +11,7 @@ const Row = ({ type, row, query }) => {
   const [data, setData] = useState(null);
   const id = row[0];
   const handleCheck = async (id) => {
+    setCurrent('Updating...')
     const res = await fetch(`/api/${type}/${id}?${query}`);
     const newData = await res.json();
     if (newData.hasOwnProperty('current')) {
@@ -23,6 +26,7 @@ const Row = ({ type, row, query }) => {
     }
     setData(newData);
   }
+  const handleRefresh = () => handleCheck(id);
   const handleUpdate = async () => {
     setUpdate(false);
     setCurrent('Updating...');
@@ -65,6 +69,11 @@ const Row = ({ type, row, query }) => {
       <TableCell>
         {(current === 'Checking...' || current === 'Updating...') && <CircularProgress size='1em' />} {current}
         {update && <button onClick={handleUpdate}>Update</button>}
+        {(current !== 'Checking...' && current !== 'Updating...') &&
+          <IconButton aria-label="refresh" size="small" onClick={handleRefresh}>
+            <RefreshIcon />
+          </IconButton>
+        }
       </TableCell>
     </TableRow>
   )

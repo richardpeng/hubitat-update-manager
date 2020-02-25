@@ -1,7 +1,8 @@
 import Hub from '../../../src/Api'
 
-export default async ({ query: { id } }, res) => {
-  const Api = new Hub('http://hubitat/')
+export default async ({ query: { id, hubUrl } }, res) => {
+  console.log(hubUrl);
+  const Api = new Hub(hubUrl)
   const app = await Api.getApp(id);
 
   if (app) {

@@ -1,9 +1,8 @@
 import Hub from '../../../src/Api'
 
-export default async (req, res) => {
-  const body = JSON.parse(req.body);
-  const { id, version, source } = body;
-  const Api = new Hub('http://hubitat/')
+export default async ({ query: { hubUrl }, body }, res) => {
+  const { id, version, source } = JSON.parse(body);
+  const Api = new Hub(hubUrl)
   const app = await Api.updateDriver({ id, version, source });
 
   if (app) {

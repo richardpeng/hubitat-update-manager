@@ -73,7 +73,7 @@ class Hub {
 
   async fetch(endpoint, id) {
     const { path, parser } = endpoints[endpoint];
-    const res = await fetch(`http://hubitat/${path(id)}`)
+    const res = await fetch(`${this.hubUrl}/${path(id)}`)
     if (parser) {
       return parser(res);
     }
@@ -81,10 +81,11 @@ class Hub {
   }
 
   async get(type, id) {
+    console.log(this.hubUrl)
     const res = await Promise.all([
-      fetch(`http://hubitat/${type}/ajax/code?id=${id}`)
+      fetch(`${this.hubUrl}/${type}/ajax/code?id=${id}`)
         .then(res => res.json()),
-      fetch(`http://hubitat/${type}/editor/${id}`)
+      fetch(`${this.hubUrl}/${type}/editor/${id}`)
         .then(res => res.text())
     ]);
     let [payload, html] = res;
@@ -103,7 +104,7 @@ class Hub {
   }
 
   update({ type, id, version, source }) {
-    return fetch(`http://hubitat/${type}/ajax/update`, {
+    return fetch(`${this.hubUrl}/${type}/ajax/update`, {
       method: 'POST',
       body: formurlencoded({
         id, version, source

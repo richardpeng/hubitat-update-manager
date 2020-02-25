@@ -1,7 +1,7 @@
 import Hub from '../../../src/Api'
 
-export default async (req, res) => {
-  const Api = new Hub('http://hubitat/')
+export default async ({query: {hubUrl}}, res) => {
+  const Api = new Hub(hubUrl)
   const app = await Api.fetch('drivers');
 
   if (app) {

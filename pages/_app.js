@@ -5,11 +5,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 import Layout from '../components/MyLayout'
 import { useRouter } from 'next/router'
+import queryString from 'query-string'
 
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
   const serverInput = useRef();
   const { hubUrl } = router.query;
+  const query = queryString.stringify(router.query);
   const setServer = (e) => {
     e.preventDefault();
     const href = `/?hubUrl=${serverInput.current.value}`
@@ -36,7 +38,7 @@ const MyApp = ({ Component, pageProps }) => {
         <Layout>
           <h1>Hubitat Update Manager</h1>
           {hubUrl ? (
-            <Component {...pageProps} hubUrl={hubUrl} />
+            <Component {...pageProps} query={query} />
           ) : (
             <div>
               <form onSubmit={setServer}>

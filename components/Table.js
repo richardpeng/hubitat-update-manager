@@ -12,11 +12,11 @@ const components = {
   apps: App
 }
 
-const AppTable = ({ type }) => {
+const AppTable = ({ type, query }) => {
   const [data, setData] = useState(null);
   const Row = components[type];
   useEffect(() => {
-    fetch(`/api/${type}/index`).then(d => d.json()).then(res => setData(res));
+    fetch(`/api/${type}/index?${query}`).then(d => d.json()).then(res => setData(res));
   }, [])
 
   return (
@@ -31,7 +31,7 @@ const AppTable = ({ type }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.rows.map(row => <Row row={row} />)}
+          {data.rows.slice(-2).map(row => <Row row={row} query={query} />)}
         </TableBody>
       </Table>}
     </div>

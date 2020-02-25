@@ -3,15 +3,13 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-const Row = ({ type, row }) => {
+const Row = ({ type, row, query }) => {
   const [current, setCurrent] = useState('Checking...');
   const [update, setUpdate] = useState(false);
-  const [updating, setUpdating] = useState(false);
   const [data, setData] = useState(null);
   const id = row[0];
-  const singularType = type.slice(0, -1);
   const handleCheck = async (id) => {
-    const res = await fetch(`/api/${type}/${id}`);
+    const res = await fetch(`/api/${type}/${id}?${query}`);
     const newData = await res.json();
     if (newData.hasOwnProperty('current')) {
       setCurrent(newData.current ? 'Up-to-date' : '');
@@ -26,9 +24,10 @@ const Row = ({ type, row }) => {
     setData(newData);
   }
   const handleUpdate = async () => {
-    setUpdating(true);
+    setUpdate(false);
+    setCurrent('Updating...');
     const { id, version, latestSource: source } = data;
-    fetch(`/api/${type}/update`, {
+    fetch(`/api/${type}/update?${query}`, {
       method: 'POST',
       body: JSON.stringify({
         id,
@@ -41,7 +40,6 @@ const Row = ({ type, row }) => {
           return res;
         } else {
           setUpdate(false);
-          setUpdating(false);
           setCurrent('Failed!')
           throw res.statusText;
         }
@@ -50,7 +48,6 @@ const Row = ({ type, row }) => {
       .then(response => {
         if (response.status === 'success') {
           setUpdate(false);
-          setUpdating(false);
           setCurrent('Updated!')
         }
       })
@@ -64,17 +61,15 @@ const Row = ({ type, row }) => {
 
   return (
     <TableRow>
-      {row.map((col, index) => <TableCell>
-        {index === 1 ? <a href={`http://hubitat/${singularType}/editor/${id}`} target='_blank'>{col}</a> : col}
-      </TableCell>)}
+      {row.map((col, index) => <TableCell>{col}</TableCell>)}
       <TableCell>
-        {(current === 'Checking...' || updating) && <CircularProgress size='1em' />} {current}
-        {update && <button onClick={handleUpdate}>{updating ? 'Updating...' : 'Update'}</button>}
+        {(current === 'Checking...' || current === 'Updating...') && <CircularProgress size='1em' />} {current}
+        {update && <button onClick={handleUpdate}>Update</button>}
       </TableCell>
     </TableRow>
   )
 }
 
-export const App = ({ row }) => <Row type='apps' row={row} />
-export const Driver = ({ row }) => <Row type='drivers' row={row} />
+export const App = ({ row, query }) => <Row type='apps' row={row} query={query} />
+export const Driver = ({ row, query }) => <Row type='drivers' row={row} query={query} />
 

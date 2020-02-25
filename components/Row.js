@@ -6,22 +6,23 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import IconButton from '@material-ui/core/IconButton'
 
 const Row = ({ type, row, query }) => {
-  const [current, setCurrent] = useState('Checking...');
+  const [status, setStatus] = useState('Checking...');
+  const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false);
   const [data, setData] = useState(null);
   const id = row[0];
   const handleCheck = async (id) => {
-    setCurrent('Updating...')
+    setStatus('Updating...')
     const res = await fetch(`/api/${type}/${id}?${query}`);
     const newData = await res.json();
     if (newData.hasOwnProperty('current')) {
-      setCurrent(newData.current ? 'Up-to-date' : '');
+      setStatus(newData.current ? 'Up-to-date' : '');
       if (!newData.current) setUpdate(true);
     } else {
       if (newData.importUrl === '') {
-        setCurrent('No import URL found')
+        setStatus('No import URL found')
       } else {
-        setCurrent('Unknown');
+        setStatus('Unknown');
       }
     }
     setData(newData);
@@ -29,7 +30,7 @@ const Row = ({ type, row, query }) => {
   const handleRefresh = () => handleCheck(id);
   const handleUpdate = async () => {
     setUpdate(false);
-    setCurrent('Updating...');
+    setStatus('Updating...');
     const { id, version, latestSource: source } = data;
     fetch(`/api/${type}/update?${query}`, {
       method: 'POST',
@@ -44,7 +45,7 @@ const Row = ({ type, row, query }) => {
           return res;
         } else {
           setUpdate(false);
-          setCurrent('Failed!')
+          setStatus('Failed!')
           throw res.statusText;
         }
       })
@@ -52,7 +53,7 @@ const Row = ({ type, row, query }) => {
       .then(response => {
         if (response.status === 'success') {
           setUpdate(false);
-          setCurrent('Updated!')
+          setStatus('Updated!')
         }
       })
   }
@@ -62,14 +63,17 @@ const Row = ({ type, row, query }) => {
     }
     doCheck();
   }, [])
+  useEffect(() => {
+    setLoading(status.includes('...'));
+  }, [status])
 
   return (
     <TableRow>
-      {row.map((col, index) => <TableCell>{col}</TableCell>)}
+      {row.map(col => <TableCell>{col}</TableCell>)}
       <TableCell>
-        {(current === 'Checking...' || current === 'Updating...') && <CircularProgress size='1em' />} {current}
+        {loading && <CircularProgress size='1em' />} {status}
         {update && <button onClick={handleUpdate}>Update</button>}
-        {(current !== 'Checking...' && current !== 'Updating...') &&
+        {!loading &&
           <IconButton aria-label="refresh" size="small" onClick={handleRefresh}>
             <RefreshIcon />
           </IconButton>

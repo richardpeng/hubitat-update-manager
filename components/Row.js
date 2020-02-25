@@ -3,18 +3,22 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton'
+import Editor from './Editor'
 
 const Row = ({ type, row, query }) => {
   const [status, setStatus] = useState('Checking...');
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false);
   const [data, setData] = useState(null);
+  const [editing, setEditing] = useState(false);
   const id = row[0];
   const handleCheck = async (id) => {
     setStatus('Updating...')
     const res = await fetch(`/api/${type}/${id}?${query}`);
     const newData = await res.json();
+    setData(newData);
     if (newData.hasOwnProperty('current')) {
       setStatus(newData.current ? 'Up-to-date' : '');
       if (!newData.current) setUpdate(true);
@@ -25,7 +29,6 @@ const Row = ({ type, row, query }) => {
         setStatus('Unknown');
       }
     }
-    setData(newData);
   }
   const handleRefresh = () => handleCheck(id);
   const handleUpdate = async () => {
@@ -57,6 +60,15 @@ const Row = ({ type, row, query }) => {
         }
       })
   }
+  const handleSave = (value) => {
+    return fetch(`/api/${type}/updateUrl?${query}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+        value
+      })
+    }).then(handleRefresh)
+  }
   useEffect(() => {
     async function doCheck() {
       await handleCheck(id)
@@ -73,11 +85,18 @@ const Row = ({ type, row, query }) => {
       <TableCell>
         {loading && <CircularProgress size='1em' />} {status}
         {update && <button onClick={handleUpdate}>Update</button>}
-        {!loading &&
-          <IconButton aria-label="refresh" size="small" onClick={handleRefresh}>
-            <RefreshIcon />
-          </IconButton>
+        {!loading && (
+          <>
+            <IconButton aria-label="edit" size="small" onClick={() => setEditing(true)}>
+              <EditIcon />
+            </IconButton>
+            <IconButton aria-label="refresh" size="small" onClick={handleRefresh}>
+              <RefreshIcon />
+            </IconButton>
+          </>
+        )
         }
+        {!loading && data && <Editor open={editing} onClose={() => setEditing(false)} onSave={handleSave} importUrl={data.importUrl} query={query} title="Update Import URL" />}
       </TableCell>
     </TableRow>
   )

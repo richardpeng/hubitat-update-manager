@@ -66,6 +66,13 @@ const endpoints = {
   },
 }
 
+const formHeaders = {
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+  }
+}
+
 class Hub {
   constructor (hubUrl) {
     this.hubUrl = hubUrl;
@@ -108,11 +115,20 @@ class Hub {
       body: formurlencoded({
         id, version, source
       }),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      }
+      ...formHeaders
     }).then(res => res.json());
+  }
+
+  updateImportUrl({ type, id, value }) {
+    return fetch(`${this.hubUrl}/${type}/editor/settings`, {
+      method: 'POST',
+      body: formurlencoded({
+        id, value,
+        key: 'url'
+      }),
+      ...formHeaders
+    })
+      .then(res => res.ok || res.status === 405);
   }
 
   getApp(id) {
@@ -123,12 +139,20 @@ class Hub {
     return this.update({type: 'app', id, version, source});
   }
 
+  updateAppImportUrl({ id, value }) {
+    return this.updateImportUrl({ type: 'app', id, value })
+  }
+
   getDriver(id) {
     return this.get('driver', id);
   }
 
   updateDriver({ id, version, source }) {
     return this.update({type: 'driver', id, version, source});
+  }
+
+  updateDriverImportUrl({ id, value }) {
+    return this.updateImportUrl({ type: 'driver', id, value })
   }
 }
 

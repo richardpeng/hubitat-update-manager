@@ -1,9 +1,9 @@
 import Table from '../components/Table'
 
-const Drivers = ({ query }) => (
+const Drivers = () => (
   <div>
     <h2>Drivers</h2>
-    <Table type='drivers' query={query} />
+    <Table type='drivers' />
   </div>
 )
 

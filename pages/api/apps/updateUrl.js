@@ -1,9 +1,8 @@
 import Hub from '../../../src/Api'
 
-export default async ({ query: { hubUrl }, body }, res) => {
-  const Api = new Hub(hubUrl)
+export default async ({ body }, res) => {
   const { id, value } = JSON.parse(body);
-  const app = await Api.updateAppImportUrl({ hubUrl, id, value });
+  const app = await Hub.updateAppImportUrl({ id, value });
 
   if (app) {
     res.status(200).json(app)

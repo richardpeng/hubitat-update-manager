@@ -7,7 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton'
 import Editor from './Editor'
 
-const Row = ({ type, row, query }) => {
+const Row = ({ type, row }) => {
   const [status, setStatus] = useState('Checking...');
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -16,7 +16,7 @@ const Row = ({ type, row, query }) => {
   const id = row[0];
   const handleCheck = async (id) => {
     setStatus('Updating...')
-    const res = await fetch(`/api/${type}/${id}?${query}`);
+    const res = await fetch(`/api/${type}/${id}`);
     const newData = await res.json();
     setData(newData);
     if (newData.hasOwnProperty('current')) {
@@ -35,7 +35,7 @@ const Row = ({ type, row, query }) => {
     setUpdate(false);
     setStatus('Updating...');
     const { id, version, latestSource: source } = data;
-    fetch(`/api/${type}/update?${query}`, {
+    fetch(`/api/${type}/update`, {
       method: 'POST',
       body: JSON.stringify({
         id,
@@ -61,7 +61,7 @@ const Row = ({ type, row, query }) => {
       })
   }
   const handleSave = (value) => {
-    return fetch(`/api/${type}/updateUrl?${query}`, {
+    return fetch(`/api/${type}/updateUrl`, {
       method: 'POST',
       body: JSON.stringify({
         id,
@@ -96,12 +96,12 @@ const Row = ({ type, row, query }) => {
           </>
         )
         }
-        {!loading && data && <Editor open={editing} onClose={() => setEditing(false)} onSave={handleSave} importUrl={data.importUrl} query={query} title="Update Import URL" />}
+        {!loading && data && <Editor open={editing} onClose={() => setEditing(false)} onSave={handleSave} importUrl={data.importUrl} title="Update Import URL" />}
       </TableCell>
     </TableRow>
   )
 }
 
-export const App = ({ row, query }) => <Row type='apps' row={row} query={query} />
-export const Driver = ({ row, query }) => <Row type='drivers' row={row} query={query} />
+export const App = ({ row }) => <Row type='apps' row={row} />
+export const Driver = ({ row }) => <Row type='drivers' row={row} />
 

@@ -1,9 +1,9 @@
 import Table from '../components/Table'
 
-const Apps = ({ query }) => (
+const Apps = () => (
   <div>
     <h2>Apps</h2>
-    <Table type='apps' query={query} />
+    <Table type='apps' />
   </div>
 )
 

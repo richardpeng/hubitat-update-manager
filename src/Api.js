@@ -2,6 +2,8 @@ import { parse } from 'node-html-parser'
 import fetch from 'isomorphic-unfetch'
 import formurlencoded from 'form-urlencoded';
 
+const HUB_URL = process.env.HUB_URL;
+
 const parseTable = ({html, tableSelector, rowSelector}) => {
   const table = parse(html).querySelector(tableSelector);
   const headers = ['ID', ...Array.from(table.querySelectorAll('th')).map(h => h.text.trim())]
@@ -74,13 +76,9 @@ const formHeaders = {
 }
 
 class Hub {
-  constructor (hubUrl) {
-    this.hubUrl = hubUrl;
-  }
-
   async fetch(endpoint, id) {
     const { path, parser } = endpoints[endpoint];
-    const res = await fetch(`${this.hubUrl}/${path(id)}`)
+    const res = await fetch(`${HUB_URL}/${path(id)}`)
     if (parser) {
       return parser(res);
     }
@@ -89,9 +87,9 @@ class Hub {
 
   async get(type, id) {
     const res = await Promise.all([
-      fetch(`${this.hubUrl}/${type}/ajax/code?id=${id}`)
+      fetch(`${HUB_URL}/${type}/ajax/code?id=${id}`)
         .then(res => res.json()),
-      fetch(`${this.hubUrl}/${type}/editor/${id}`)
+      fetch(`${HUB_URL}/${type}/editor/${id}`)
         .then(res => res.text())
     ]);
     let [payload, html] = res;
@@ -110,7 +108,7 @@ class Hub {
   }
 
   update({ type, id, version, source }) {
-    return fetch(`${this.hubUrl}/${type}/ajax/update`, {
+    return fetch(`${HUB_URL}/${type}/ajax/update`, {
       method: 'POST',
       body: formurlencoded({
         id, version, source
@@ -120,7 +118,7 @@ class Hub {
   }
 
   updateImportUrl({ type, id, value }) {
-    return fetch(`${this.hubUrl}/${type}/editor/settings`, {
+    return fetch(`${HUB_URL}/${type}/editor/settings`, {
       method: 'POST',
       body: formurlencoded({
         id, value,
@@ -156,4 +154,4 @@ class Hub {
   }
 }
 
-export default Hub;
+export default new Hub();

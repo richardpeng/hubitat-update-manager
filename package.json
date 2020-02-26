@@ -1,7 +1,7 @@
 {
   "name": "hubitat-update-manager",
   "version": "1.0.0",
-  "description": "",
+  "description": "Check and update Hubitat Custom Apps and Drivers",
   "main": "index.js",
   "scripts": {
     "dev": "next",
@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Richard Peng",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.4",

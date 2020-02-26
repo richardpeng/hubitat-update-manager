@@ -14,8 +14,8 @@ const Row = ({ type, row }) => {
   const [data, setData] = useState(null);
   const [editing, setEditing] = useState(false);
   const id = row[0];
-  const handleCheck = async (id) => {
-    setStatus('Updating...')
+  const handleCheck = async () => {
+    setStatus('Checking...')
     const res = await fetch(`/api/${type}/${id}`);
     const newData = await res.json();
     setData(newData);
@@ -30,7 +30,6 @@ const Row = ({ type, row }) => {
       }
     }
   }
-  const handleRefresh = () => handleCheck(id);
   const handleUpdate = async () => {
     setUpdate(false);
     setStatus('Updating...');
@@ -67,13 +66,10 @@ const Row = ({ type, row }) => {
         id,
         value
       })
-    }).then(handleRefresh)
+    }).then(handleCheck)
   }
   useEffect(() => {
-    async function doCheck() {
-      await handleCheck(id)
-    }
-    doCheck();
+    handleCheck();
   }, [])
   useEffect(() => {
     setLoading(status.includes('...'));
@@ -90,7 +86,7 @@ const Row = ({ type, row }) => {
             <IconButton aria-label="edit" size="small" onClick={() => setEditing(true)}>
               <EditIcon />
             </IconButton>
-            <IconButton aria-label="refresh" size="small" onClick={handleRefresh}>
+            <IconButton aria-label="refresh" size="small" onClick={handleCheck}>
               <RefreshIcon />
             </IconButton>
           </>

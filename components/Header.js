@@ -1,20 +1,12 @@
-import Link from 'next/link';
-
 const linkStyle = {
   marginRight: 15
 };
 
 const Header = () => (
   <div>
-    <Link href="/">
-      <a style={linkStyle}>Hub</a>
-    </Link>
-    <Link href="/apps">
-      <a style={linkStyle}>Apps</a>
-    </Link>
-    <Link href="/drivers">
-      <a style={linkStyle}>Drivers</a>
-    </Link>
+    <a style={linkStyle} href="/">Hub</a>
+    <a style={linkStyle} href="/apps">Apps</a>
+    <a style={linkStyle} href="/drivers">Drivers</a>
   </div>
 );
 

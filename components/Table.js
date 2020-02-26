@@ -20,10 +20,10 @@ const AppTable = ({ type }) => {
   }, [])
 
   return (
-    <div>
+    <div style={{overflow: 'scroll'}}>
       {!data && <Loading/>}
       {data &&
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             {data.headers.map(h => <TableCell>{h}</TableCell>)}

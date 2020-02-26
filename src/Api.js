@@ -76,6 +76,10 @@ const formHeaders = {
 }
 
 class Hub {
+  constructor () {
+    console.log('Initializing hub:', HUB_URL)
+  }
+
   async fetch(endpoint, id) {
     const { path, parser } = endpoints[endpoint];
     const res = await fetch(`${HUB_URL}/${path(id)}`)

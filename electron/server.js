@@ -4,14 +4,17 @@
 const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
+const path = require('path')
 
-console.log('server loading')
-// module.exports = function (dev) {
-  const app = next({ dev: false })
+module.exports = function (dev) {
+  const app = next({
+    dev,
+    dir: `${path.relative(process.cwd(), __dirname)}/../`
+  })
   const handle = app.getRequestHandler()
 
-  app.prepare().then(() => {
-    createServer((req, res) => {
+  return app.prepare().then(() => {
+    return createServer((req, res) => {
       // Be sure to pass `true` as the second argument to `url.parse`.
       // This tells it to parse the query portion of the URL.
       const parsedUrl = parse(req.url, true)
@@ -22,4 +25,4 @@ console.log('server loading')
       console.log('> Ready on http://localhost:3000')
     })
   })
-// }
+}

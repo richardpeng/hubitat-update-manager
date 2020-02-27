@@ -8,7 +8,6 @@
     "build": "next build",
     "next:start": "next build && next start",
     "start": "electron .",
-    "start:prod": "NODE_ENV=production electron .",
     "electron:package": "electron-packager ."
   },
   "keywords": [],

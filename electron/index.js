@@ -1,16 +1,8 @@
 const { app, BrowserWindow } = require('electron')
-// const nextApp = require('./server')
+const nextApp = require('./server')
 const unhandled = require('electron-unhandled');
 
 unhandled();
-
-let serverProc = require('child_process').fork(
-  require.resolve('./server'),
-  [], // pass to process.argv into child
-  {
-    // options
-  }
-)
 
 const isDev = require('electron-is-dev')
 
@@ -25,13 +17,13 @@ function createWindow () {
   })
 
   // win.loadFile('src/index.html')
-  // nextApp(false).then(() => {
+  nextApp(isDev).then(() => {
     win.loadURL('http://localhost:3000')
 
     if (isDev) {
       win.webContents.openDevTools()
     }
-  // });
+  });
 }
 
 // This method will be called when Electron has finished

@@ -3,22 +3,11 @@
   "productName": "hubitat-update-manager",
   "version": "1.0.0",
   "description": "Check and update Hubitat Custom Apps and Drivers",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\"",
     "dev": "next",
     "build": "next build",
-    "start:server": "next build && next start",
-    "make:all": "next build && npm run make:darwin && npm run make:linux && npm run make:win32",
-    "make:linux": "npm run make:linux:arm64 && npm run make:linux:armv7l && npm run make:linux:x64",
-    "make:linux:armv7l": "electron-forge make --platform linux --arch armv7l",
-    "make:linux:arm64": "electron-forge make --platform linux --arch arm64",
-    "make:linux:x64": "electron-forge make --platform linux --arch x64",
-    "make:darwin": "electron-forge make --platform darwin",
-    "make:win32": "electron-forge make --platform win32"
+    "start": "next build && next start"
   },
   "keywords": [],
   "author": {
@@ -26,30 +15,9 @@
     "email": "richard@richardpeng.com"
   },
   "license": "ISC",
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "hubitat_update_manager"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-dmg"
-        },
-        {
-          "name": "@electron-forge/maker-deb"
-        }
-      ]
-    }
-  },
   "dependencies": {
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
-    "electron-is-dev": "^1.1.0",
-    "electron-squirrel-startup": "^1.0.0",
     "form-urlencoded": "^4.1.3",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^9.2.2",
@@ -57,15 +25,5 @@
     "query-string": "^6.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
-  },
-  "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.50",
-    "@electron-forge/maker-deb": "^6.0.0-beta.50",
-    "@electron-forge/maker-dmg": "^6.0.0-beta.50",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.50",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
-    "@electron-forge/maker-zip": "^6.0.0-beta.50",
-    "@electron-forge/publisher-github": "^6.0.0-beta.50",
-    "electron": "8.0.2"
   }
 }

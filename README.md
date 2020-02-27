@@ -7,7 +7,7 @@ This app can be run as a desktop application or as a server.
 
 ### Desktop application
 
-Download a release for your platform from the [Releases page](https://github.com/richardpeng/hubitat-update-manager/releases).
+Download a release for your platform from the [Releases page](https://github.com/richardpeng/hubitat-update-manager-gui/releases).
 
 ### Server
 - [Using Docker](#using-docker)
@@ -30,7 +30,7 @@ npm install
 
 #### Running
 ```
-npm run start:server
+npm start
 ```
 
 ## Development

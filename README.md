@@ -39,4 +39,26 @@ This app is built in [Next.js](https://nextjs.org/). To start the development se
 
 ```
 npm run dev
+```           
+
+This app also has an [Electron](https://www.electronjs.org/) wrapper around the Node server.
+
+To start the Electron development server:
+
+```
+npm run start:gui
+```         
+
+### Building releases
+
+```
+npm run make:all
+```
+
+or one of these:
+
+```
+npm run build && npm run make:linux
+npm run build && npm run make:darwin
+npm run build && npm run make:win32
 ```

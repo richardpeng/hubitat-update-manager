@@ -20,7 +20,7 @@ const AppTable = ({ type, query }) => {
   }, [])
 
   return (
-    <div style={{overflow: 'scroll'}}>
+    <div style={{overflowX: 'scroll'}}>
       {!data && <Loading/>}
       {data &&
       <Table size="small">

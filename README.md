@@ -3,6 +3,16 @@ Check and update Hubitat Custom Apps and Drivers
 
 ## Usage
 
+This app can be run as a desktop application or as a server.
+
+### Desktop application
+
+Download a release for your platform from the [Releases page](https://github.com/richardpeng/hubitat-update-manager/releases).
+
+### Server
+- [Using Docker](#using-docker)
+- [Using Node](#using-node)
+
 ### Using Docker
 
 ```

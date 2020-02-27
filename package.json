@@ -7,12 +7,18 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "next build && electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
     "dev": "next",
     "build": "next build",
-    "next:start": "next build && next start"
+    "next:start": "next build && next start",
+    "make:all": "next build && npm run make:darwin && npm run make:linux && npm run make:win32",
+    "make:linux": "npm run make:linux:arm64 && npm run make:linux:armv7l && npm run make:linux:x64",
+    "make:linux:armv7l": "electron-forge make --platform linux --arch armv7l",
+    "make:linux:arm64": "electron-forge make --platform linux --arch arm64",
+    "make:linux:x64": "electron-forge make --platform linux --arch x64",
+    "make:darwin": "electron-forge make --platform darwin",
+    "make:win32": "electron-forge make --platform win32"
   },
   "keywords": [],
   "author": {
@@ -31,18 +37,10 @@
           }
         },
         {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
+          "name": "@electron-forge/maker-dmg"
         },
         {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "name": "@electron-forge/maker-deb"
         }
       ]
     }
@@ -63,9 +61,11 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.50",
     "@electron-forge/maker-deb": "^6.0.0-beta.50",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.50",
     "@electron-forge/maker-rpm": "^6.0.0-beta.50",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
     "@electron-forge/maker-zip": "^6.0.0-beta.50",
+    "@electron-forge/publisher-github": "^6.0.0-beta.50",
     "electron": "8.0.2"
   }
 }

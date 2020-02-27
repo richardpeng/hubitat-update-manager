@@ -11,7 +11,7 @@
     "lint": "echo \"No linting configured\"",
     "dev": "next",
     "build": "next build",
-    "next:start": "next build && next start",
+    "start:server": "next build && next start",
     "make:all": "next build && npm run make:darwin && npm run make:linux && npm run make:win32",
     "make:linux": "npm run make:linux:arm64 && npm run make:linux:armv7l && npm run make:linux:x64",
     "make:linux:armv7l": "electron-forge make --platform linux --arch armv7l",

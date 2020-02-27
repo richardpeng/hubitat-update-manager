@@ -11,9 +11,16 @@ docker run -d --restart unless-stopped -p 3000:3000 richpeng/hubitat-update-mana
 
 ### Using Node
 
+#### Installation
 ```
+git clone https://github.com/richardpeng/hubitat-update-manager.git
+cd hubitat-update-manager
 npm install
-npm start
+```
+
+#### Running
+```
+npm run start:server
 ```
 
 ## Development

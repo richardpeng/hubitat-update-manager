@@ -7,7 +7,7 @@ This app can be run as a desktop application or as a server.
 
 ### Desktop application
 
-Download a release for your platform from the [Releases page](https://github.com/richardpeng/hubitat-update-manager-gui/releases).
+Download a release for your platform from the [Releases page](https://github.com/richardpeng/hubitat-update-manager/releases).
 
 ### Server
 - [Using Docker](#using-docker)

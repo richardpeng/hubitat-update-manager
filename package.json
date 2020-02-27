@@ -1,5 +1,5 @@
 {
-  "name": "hubitat-update-manager",
+  "name": "@richardpeng/hubitat-update-manager",
   "productName": "hubitat-update-manager",
   "version": "1.0.0",
   "description": "Check and update Hubitat Custom Apps and Drivers",
@@ -10,10 +10,7 @@
     "start": "next build && next start"
   },
   "keywords": [],
-  "author": {
-    "name": "Richard Peng",
-    "email": "richard@richardpeng.com"
-  },
+  "author": "Richard Peng <richard@richardpeng.com>",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.4",
@@ -25,5 +22,14 @@
     "query-string": "^6.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardpeng/hubitat-update-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/richardpeng/hubitat-update-manager/issues"
+  },
+  "homepage": "https://github.com/richardpeng/hubitat-update-manager#readme"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@richardpeng/hubitat-update-manager",
+  "name": "hubitat-update-manager",
   "productName": "hubitat-update-manager",
   "version": "2.0.0",
   "description": "Check and update Hubitat Custom Apps and Drivers",

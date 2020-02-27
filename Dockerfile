@@ -1,6 +1,4 @@
 FROM node:lts-alpine
-# Environment variables
-ENV HUB_URL $HUB_URL
 # Setting working directory. All the path will be relative to WORKDIR
 WORKDIR /usr/src/app
 # Installing dependencies

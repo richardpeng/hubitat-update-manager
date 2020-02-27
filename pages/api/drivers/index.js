@@ -1,7 +1,7 @@
 import Hub from '../../../src/Api'
 
-export default async (req, res) => {
-  const app = await Hub.fetch('drivers');
+export default async ({query: {hubUrl}}, res) => {
+  const app = await new Hub(hubUrl).fetch('drivers');
 
   if (app) {
     res.status(200).json(app)
